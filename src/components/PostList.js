@@ -1,7 +1,7 @@
 import React from 'react'
 import PostCard from './PostCard';
 import styles from '../css/postlist.module.css';
-import logo from '../img/logo.png';
+import { FaAndroid } from 'react-icons/fa';
 
 const PostList = ({ posts }) => {
     console.log("<< PostList: POSTS >>")
@@ -9,7 +9,8 @@ const PostList = ({ posts }) => {
     return (
         <section className={styles.posts}>
             <div className={styles.header}>
-                <img src={logo} alt="logo" />
+                <h1><FaAndroid /></h1>
+                <h1>doc.stephangriesel.com</h1>
             </div>
             <div className={styles.center}>
                 {posts.map(({ node }, index) => {

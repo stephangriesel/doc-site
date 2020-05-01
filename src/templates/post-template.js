@@ -5,10 +5,7 @@ import Image from 'gatsby-image';
 import Layout from '../components/layout';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-
 const PostTemplate = ({ data }) => {
-  // console.log('<<< PAGE CONTEXT >>>')
-  // console.log(pageContext);
   const { title, date, author, image } = data.mdx.frontmatter;
   const { body } = data.mdx;
   const img = image.childImageSharp.fluid;

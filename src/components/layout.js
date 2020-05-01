@@ -8,7 +8,7 @@ const layout = ({ children }) => {
                 {children}
             </main>
             <footer>
-                &copy; wijrun.com
+                &copy; doc.stephangriesel.com
             </footer>
         </div>
     )
