@@ -5,6 +5,14 @@
   margin: 0;
 }
 
+a {
+  color: var(--mainBlack);
+}
+
+a:active {
+  color: var(--darkGrey);
+}
+
 body {
   background: var(--mainGrey);
   font-family: "Montserrat", sans-serif;
