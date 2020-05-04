@@ -1,4 +1,9 @@
 module.exports = {
+  siteMetadata: {
+    title: `Stephan's Documentation Site`,
+    siteUrl: `https://doc.stephangriesel.com`,
+    description: `Site with documentation for self reference`,
+  },
   plugins: [
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

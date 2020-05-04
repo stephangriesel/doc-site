@@ -21,9 +21,77 @@ You can see all the starters in [their starters library](https://www.gatsbyjs.or
 
 ### 2. GraphiQL is great but GraphQL Playground is better
 
-[Download here](https://github.com/prisma-labs/graphql-playground)
+I prefer to use GraphQL Playground by Prisma. Main reason is because I can save my queries in different tabs and go back to older query if needed.
+[More info & download here](https://github.com/prisma-labs/graphql-playground)
 
-... work in progress
+### 3. CSS Modules for styling
+
+CSS Modules are just cleaner way to manage styling on my site. This is my go to method for styling. See the [Gatsby Docs](https://www.gatsbyjs.org/docs/css-modules/) on how to use this.
+
+### 4. Site metadata
+
+Set up site metadata and reference with query. Your config should look something like this
+
+```
+gatsby-config.js
+================
+
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby`,
+    siteUrl: `https://www.gatsbyjs.org`,
+    description: `Blazing fast modern site generator for React`,
+  },
+}
+```
+
+More on the config API can be see on [Gatsby Docs](https://www.gatsbyjs.org/docs/gatsby-config/)
+
+### 5. Query
+
+```
+{
+  site {
+    siteMetadata {
+      title
+      siteUrl
+      description
+    }
+  }
+}
+```
+
+Render data:
+
+#### StaticQuery
+
+```
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+const ComponentName = () => {
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          title
+          siteUrl
+          description
+        }
+      }
+    }
+  `)
+  return (
+      <div>
+        <p>{data.site.siteMetaData.title}</p>
+        <p>{data.site.siteMetaData.description}</p>
+      </div>
+  )
+}
+
+export default ComponentName
+
+```
 
 <div className="post-image">
 
