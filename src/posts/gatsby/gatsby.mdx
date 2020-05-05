@@ -1,7 +1,7 @@
 ---
 title: Stephan ❤ Gatsby
 slug: gatsby
-image: ./img/gatsbylogo.png
+image: ./img/gatsbylogofull.png
 date: 2016-05-18
 author: Stephan
 ---
@@ -61,7 +61,7 @@ More on the config API can be see on [Gatsby Docs](https://www.gatsbyjs.org/docs
 }
 ```
 
-Render data:
+**Render data:**
 
 #### StaticQuery
 
@@ -69,27 +69,233 @@ Render data:
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-const ComponentName = () => {
-  const data = useStaticQuery(graphql`
-    {
-      site {
-        siteMetadata {
-          title
-          siteUrl
-          description
+const getData = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+        siteUrl
+        description
+        person {
+          name
         }
       }
     }
-  `)
+  }
+`
+
+const ComponentName = () => {
+  const data = useStaticQuery(getData);
+  // TEST
+  console.log(data);
   return (
       <div>
         <p>{data.site.siteMetaData.title}</p>
         <p>{data.site.siteMetaData.description}</p>
+        <p>Hi my name is {data.site.siteMetaData.person.name}</p>
       </div>
   )
 }
 
 export default ComponentName
+
+```
+
+#### After destructuring
+
+```
+
+
+const getData = graphql`
+  {
+    site: {
+      siteMetaData: {
+        title,
+        person: {
+          name
+        }
+      }
+    }
+  }
+`
+
+const ComponentName = () => {
+  const data = useStaticQuery(getData);
+  return (
+      <div>
+        <p>{title}</p>
+        <p>Hi my name is {name}</p>
+      </div>
+  )
+}
+
+
+```
+
+#### Add alias to destructured code
+
+```
+{
+  site {
+    info: siteMetadata { // << info alias added
+      title
+      siteUrl
+      description
+    }
+  }
+}
+
+const getData = graphql`{ site: { info: { // << update reference after adding alias to query title, person: { name } } } }`
+
+const ComponentName = () => {
+const data = useStaticQuery(getData);
+return (
+<div>
+<p>{title}</p>
+<p>Hi my name is {name}</p>
+</div>
+)
+}
+
+```
+
+### 6. SEO
+
+**Add head element to all pages with React Helmet**
+
+```
+npm install --save gatsby-plugin-react-helmet react-helmet
+```
+
+Add string to config:
+
+```
+`gatsby-plugin-react-helmet`
+```
+
+**SEO for social networks**
+
+Add the following to siteMetaData & copy image to static folder in the root folder
+
+```
+gatsby-config.js
+================
+module.exports = {
+  siteMetadata: {
+    ...
+    twitterUsername:"@stevegriesel",
+    image:'/yourimage.jpg',
+    siteUrl:'https://www.yourdomain.com'
+    ...
+    },
+}
+
+```
+
+**Create SEO component**
+
+Finished component can be found [here](https://gist.github.com/stephangriesel/a4a5f0c9852896b0116d86326b8ecb1e)
+
+```
+import React from 'react'
+import {Helmet} from 'react'
+import {useStaticQuery, graphql} from 'gatsby'
+
+const SEO = ({title,description}) => {
+    return (
+        <Helmet title={title}>
+            <meta name="description" content={description} />
+        </Helmet>
+    )
+}
+
+export default SEO
+
+```
+
+**Add SEO component to page you want to enable SEO on**
+
+```
+...
+import SEO from '../components/SEO'
+
+<SEO title="home" description="this is a description" />
+...
+
+```
+
+**Query siteMetaData in SEO component**
+
+```
+...
+const getData = graphql`
+{
+    site {
+      siteMetadata {
+        siteTitle: title
+        siteDesc: description
+        author
+        siteUrl
+        twitterUsername
+        image
+      }
+    }
+  }
+
+`
+`
+...
+```
+
+**Consume data queried**
+
+```
+SEO.js
+======
+const SEO = ({title,description}) => {
+  const {site} = useStaticQuery(getData); // << destructure and reference query
+
+  const {site, title, siteUrl, image, twitterUsername} = site.siteMetadata;
+
+    ...
+}
+```
+
+**Add this dynamically to head**
+
+On my template page I am querying these dynamic values and can use it in the post-template.js file.
+
+```
+post-template.js
+======
+...
+import SEO from '../components/SEO';
+
+const PostTemplate = ({ data }) => {
+  const { title, date, author, image } = data.mdx.frontmatter;
+  ...
+
+  return (
+    <Layout>
+      <SEO title={title} />
+      ...
+    </Layout>
+  )
+}
+
+export const query = graphql`
+query ... {
+    ... {
+      ... {
+        title
+       ...
+      }
+      body
+    }
+  }
+`
+export default PostTemplate;
+
 
 ```
 

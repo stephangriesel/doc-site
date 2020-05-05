@@ -4,6 +4,7 @@ import { Link, graphql } from 'gatsby';
 import Image from 'gatsby-image';
 import Layout from '../components/layout';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import SEO from '../components/SEO';
 
 const PostTemplate = ({ data }) => {
   const { title, date, author, image } = data.mdx.frontmatter;
@@ -12,6 +13,7 @@ const PostTemplate = ({ data }) => {
 
   return (
     <Layout>
+      <SEO title={title} />
       <section className={styles.template}>
         <Link to='/' className={styles.link}>Back</Link>
         <div className={styles.info}>

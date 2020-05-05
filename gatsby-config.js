@@ -3,8 +3,12 @@ module.exports = {
     title: `Stephan's Documentation Site`,
     siteUrl: `https://doc.stephangriesel.com`,
     description: `Site with documentation for self reference`,
+    author: 'Stephan Griesel',
+    twitterUsername: `@stevegriesel`,
+    image: '/me.jpg'
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

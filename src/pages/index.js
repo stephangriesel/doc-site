@@ -2,6 +2,7 @@ import React from "react";
 import Layout from '../components/layout';
 import PostList from '../components/PostList';
 import { graphql, useStaticQuery } from 'gatsby';
+import SEO from '../components/SEO';
 
 const getPosts = graphql`
 {
@@ -38,6 +39,7 @@ export default () => {
   const posts = response.allMdx.edges
   return (
     <Layout>
+      <SEO title="Home" description="Stephan\'s documentation site" />
       <PostList posts={posts} />
     </Layout>
   )
