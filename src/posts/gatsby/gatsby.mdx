@@ -19,6 +19,12 @@ In my first post I am going to run through how to set up basic Gastby site. This
 
 You can see all the starters in [their starters library](https://www.gatsbyjs.org/starters/), for this example I am going to use the [Hello World Starter](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-hello-world/), which is the bare minimum. Setting it up this way I also understand what I am using and what I am using it for.
 
+Create directory and run following command:
+
+```
+gatsby new . https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
 ### 2. GraphiQL is great but GraphQL Playground is better
 
 I prefer to use GraphQL Playground by Prisma. Main reason is because I can save my queries in different tabs and go back to older query if needed.
@@ -297,6 +303,26 @@ query ... {
 export default PostTemplate;
 
 
+```
+
+### 7. Images
+
+Install gatsby-image
+
+```
+npm install --save gatsby-image
+```
+
+Followed by transformer sharp
+
+```
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
+```
+
+Add following strings to plugins
+
+```
+`gatsby-transformer-sharp`, `gatsby-plugin-sharp`
 ```
 
 <div className="post-image">
