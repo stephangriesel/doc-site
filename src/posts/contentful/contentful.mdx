@@ -6,11 +6,54 @@ date: 2016-05-18
 author: Stephan
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dignissim ultrices eros, sit amet tempus nibh luctus ac. Proin aliquet commodo lorem. Maecenas id consectetur diam. Vestibulum at purus nulla. Nunc interdum ante in ornare sagittis. Integer lacinia interdum nunc, id aliquam arcu molestie et. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet pharetra rhoncus. Nulla facilisi. Ut viverra pharetra augue, et malesuada nisi ultrices in. Pellentesque hendrerit mi et nisi malesuada pulvinar. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam tincidunt, arcu eget mattis elementum, lectus quam mollis ante, a vestibulum libero arcu et elit. Nam dignissim eros at ornare accumsan.
+### Assumptions
 
-Morbi dapibus arcu nec magna auctor, quis laoreet lacus pharetra. Phasellus fringilla molestie tellus, feugiat feugiat leo rhoncus fermentum. In porttitor lacus enim, ac pulvinar ante euismod nec. Duis justo nisi, bibendum vel elit vestibulum, vestibulum venenatis enim. Etiam sit amet sem eu orci sodales vestibulum. Sed egestas aliquam ultricies. Aliquam erat volutpat. Etiam nec arcu eget tellus tincidunt interdum. Nulla et risus nec lectus convallis rutrum ut a lacus. Phasellus a massa quis massa blandit vestibulum ac id ligula. Maecenas blandit mi nec odio porttitor sodales. Etiam ac elit id justo gravida placerat at porttitor tellus. In pharetra, libero consectetur dignissim interdum, justo arcu egestas sapien, quis semper dui ligula sed nibh. Vestibulum vestibulum sem eros, nec efficitur magna tincidunt ac. Suspendisse mollis tempus lacus, at dignissim nulla finibus sit amet. Sed facilisis neque eget ante hendrerit pellentesque.
+- Your Gatsby site is set up already, if not refer to the [Gatsby post](https://doc.stephangriesel.com/gatsby).
 
-Ut rutrum odio sit amet tortor laoreet faucibus. Integer non urna et mi finibus ornare at sed lorem. Etiam euismod finibus nisl, vitae tincidunt nulla fermentum in. Praesent posuere feugiat ipsum. Nullam bibendum vehicula posuere. Curabitur varius vel nibh tincidunt imperdiet. Aenean lacinia enim turpis, eleifend lobortis purus blandit at. Maecenas vitae egestas nisi, in gravida nisl.
+### Set up content model
+
+- Go to "Content model" in dashboard & add new "content type"
+- Add content types as you please
+
+### Connect Contentful
+
+**Install Plugin**
+
+- Go to Gatsbyjs.org and get details on the [plugin](https://www.gatsbyjs.org/packages/gatsby-source-contentful/) & install.
+- Copy Delivery API object & add to gatsby-config.js
+
+```
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+```
+
+- Set up environment variables & copy keys from Contentful dashboard
+
+1. Create .env.development \* .env.production in root
+2. Add sensitive data in this the new .env files create, example: CONTENTFUL_ACCESS_TOKEN=yoursecretkey
+3. Require **dotenv** in gatsby.config
+
+```
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+```
+
+4. Add variable to config:
+
+```
+accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+```
+
+### Add query
+
+Go to GraphiQL or Playground and test query. Once data received copy query. If images are used remember to update image source with [Gatsby Image Fragment](https://www.gatsbyjs.org/packages/gatsby-image/?=#fragments)
 
 <div className="post-video">
   <iframe
