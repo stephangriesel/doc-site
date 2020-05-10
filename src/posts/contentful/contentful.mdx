@@ -33,7 +33,7 @@ author: Stephan
     },
 ```
 
-- Set up environment variables & copy keys from Contentful dashboard
+**Set up environment variables & copy keys from Contentful dashboard**
 
 1. Create .env.development \* .env.production in root
 2. Add sensitive data in this the new .env files create, example: CONTENTFUL_ACCESS_TOKEN=yoursecretkey
@@ -55,27 +55,51 @@ accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
 
 Go to GraphiQL or Playground and test query. Once data received copy query. If images are used remember to update image source with [Gatsby Image Fragment](https://www.gatsbyjs.org/packages/gatsby-image/?=#fragments)
 
-<div className="post-video">
-  <iframe
-    width="100%"
-    height="615"
-    src="https://www.youtube.com/embed/eKbLNXdmD6g"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+### Set up layout & components
 
-### Ut rutrum odio:
+**Create Components**
 
-- Speruna Luxury Inn €160 for both nights
-- Very central
-- Fast wifi
-- Wine and water in fridge
-- Smart TV with all local channels, we just watched Netflix during our stay (on your own account of course)
+- Layout
+- Header
+- Footer
 
-<div className="post-image">
+In the index.js file wrap your _layout_ component around child elements
 
-![](./img/gatsbylogo.png)
+```
+layout.js
+---
+const layout = ({children}) => {
+  return (
+    <>
+      <Navbar />
+      <main>{children}</main>
+      <Footer />
+    </>
+  )
+}
+```
 
-</div>
+### Render Data
+
+```
+const PostsPageComponent = ({ data }) => {
+    const { allContentfulPost: { nodes: posts },
+    } = data
+    console.log("<<POSTS>>")
+    console.log(posts);
+    return (
+        <Layout>
+            <section>
+                {posts.map(post => {
+                    console.log(post)
+                    return <article key={post.id}>
+                        <Image fluid={post.image.fluid} alt={post.title}></Image>
+                        <h1>{post.title}</h1>
+                        <Link to={`/posts/${post.slug}`}>Read more</Link>
+                    </article>
+                })}
+            </section>
+        </Layout>
+    )
+}
+```
