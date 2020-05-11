@@ -103,3 +103,21 @@ const PostsPageComponent = ({ data }) => {
     )
 }
 ```
+
+### Set up template
+
+Create new _template_ folder inside src with template file inside, in this example **post-template.js**
+
+### Slug
+
+Back in GraphiQL or Playground test your query for all products to get your slug:
+
+```
+query MyQuery {
+  allContentfulPost {
+    nodes {
+      slug
+    }
+  }
+}
+```
