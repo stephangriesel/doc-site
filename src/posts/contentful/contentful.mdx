@@ -110,14 +110,90 @@ Create new _template_ folder inside src with template file inside, in this examp
 
 ### Slug
 
-Back in GraphiQL or Playground test your query for all products to get your slug:
+Back in GraphiQL or Playground test your query for all posts to get your slug:
 
 ```
-query MyQuery {
-  allContentfulPost {
+query GetPosts {
+  posts:allContentfulPost {
     nodes {
       slug
     }
   }
 }
 ```
+
+**Gatsby-Node**
+
+Create in root: gatsby-node.js
+
+Create function & return promise:
+
+```
+exports.createPages = async ({graphql, actions}) => {
+  const {createPage} = actions
+    const result = await graphql(`
+    query GetPosts {
+    posts:allContentfulPost {
+      nodes {
+        slug
+      }
+    }
+  }
+  `)
+  console.log('<< POST RESULT TEST >>')
+  console.log(JSON.stringify(result))
+}
+```
+
+Restart server to apply gatsby-node changes, upon restart you should see this in your logs:
+
+```
+Fetch Contentful data: 506.187ms
+success source and transform nodes - 0.626s
+success building schema - 0.271s
+<< POST RESULT TEST >>
+{"data":{"posts":{"nodes":[{"slug":"third-post"},{"slug":"second-post"},{"slug":"first-post"}]}}}
+success createPages - 0.020s
+```
+
+Loop over posts with forEach method because it is an array, look at POST RESULT TEST to get the structure:
+**{"data":{"posts":{"nodes":[{"slug":"third-post"},{"slug":"second-post"},{"slug":"first-post"}]}}}**
+
+```
+exports.createPages = async ({graphql, actions}) => {
+...
+  `)
+  console.log('<< POST RESULT TEST >>')
+  console.log(JSON.stringify(result))
+  result.data.posts.nodes.forEach((post) => {
+    createPage({
+      path:`/posts/${post.slug}`,
+      component:path.resolve(`src/templates/post-template.js`),
+      context: {
+        slug:post.slug,
+      }
+    })
+  })
+}
+```
+
+Remember to add **Node.js Path Module** to your **gatsby-node.js** file:
+const path = require('path')
+
+**Test props in post template**
+
+Add the following to **post-template.js**
+
+```
+const PostTemplate = (props) => {
+  console.log('<< PROPS RECEIVED FROM POST PAGE >>')
+  console.log(props)
+    return (
+        <div>
+            post template, coming soon!
+        </div>
+    )
+}
+```
+
+Browse to site, direct yourself to 404 page and use links to test if you receiving the props.
