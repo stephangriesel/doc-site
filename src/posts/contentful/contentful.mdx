@@ -197,3 +197,61 @@ const PostTemplate = (props) => {
 ```
 
 Browse to site, direct yourself to 404 page and use links to test if you receiving the props.
+
+### Query single post
+
+In GraphiQL or Playground test single post as well as query variables to be sure everything is working.
+
+```
+query GetSinglePost($slug:String) {
+  post: contentfulPost(slug: {eq:$slug}) {
+    title
+    postText {
+      postText
+    }
+    image {
+      fluid {
+        src
+      }
+    }
+  }
+}
+```
+
+Add query variable to test
+
+```
+{
+  "slug": "first-post"
+}
+```
+
+If all good and you get the correct result, use code exporter to copy the page query
+
+### Add query to post template page
+
+```
+post-template.js
+----------------
+const PostTemplate = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
+
+export const query = graphql`
+query GetSinglePost($slug:String) {
+    post: contentfulPost(slug: {eq: $slug}) {
+      title
+      postText {
+        postText
+      }
+      image {
+        fluid {
+          src
+        }
+      }
+    }
+  }
+`
+
+export default PostTemplate
+```
+
+### Clean it up and add the rest of the components
