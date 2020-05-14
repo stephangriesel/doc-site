@@ -255,3 +255,36 @@ export default PostTemplate
 ```
 
 ### Clean it up and add the rest of the components
+
+Test data commented out in finished example below.
+Destructure data you going to use, in this case: **title**, **image**, **postText**
+Import **gatsby-image**
+Import **layout** component and Wrap **layout** component around return
+
+```
+post-template.js
+----------------
+// Test DATA:
+// const PostTemplate = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
+const PostTemplate = ({ data: { post: { title, image: { fluid }, postText: { postText } } } }) => {
+    return <Layout>
+        <div>
+            <Link to="/posts">Back to Posts</Link>
+            <h1>Single Post</h1>
+        </div>
+        <section>
+            <article>
+                <Image fluid={fluid} alt={title} />
+            </article>
+            <article>
+                <h1>{title}</h1>
+                <p>{postText}</p>
+            </article>
+        </section>
+    </Layout>
+}
+```
+
+### Add styles
+
+Using css modules for this example. More info on [CSS modules here](https://www.gatsbyjs.org/docs/css-modules/)
